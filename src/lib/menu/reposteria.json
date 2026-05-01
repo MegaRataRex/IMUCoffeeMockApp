@@ -1,0 +1,72 @@
+{
+  "category": "reposteria",
+  "shared_toppings": {
+    "id": "nieve",
+    "options": [
+      { "id": "nieve", "label": "Nieve", "precio_extra": 10.00 }
+    ]
+  },
+  "products": [
+    {
+      "id": "donas",
+      "name": "Donas",
+      "imagen": "/images/productos/donas.png",
+      "precio": null,
+      "steps": ["flavor", "toppings"],
+      "flavors": [
+        { "id": "choco_chocolate", "label": "Choco de Chocolate", "precio_base": 37.00 },
+        { "id": "maple",           "label": "Dona de Maple",      "precio_base": 37.00 },
+        { "id": "vainilla",        "label": "Dona de Vainilla",   "precio_base": 37.00 }
+      ],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "galleta_chocolate",
+      "name": "Galleta de Chocolate",
+      "imagen": "/images/productos/galleta-chocolate.png",
+      "precio": 40.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "galleta_avellana",
+      "name": "Galleta de Avellana",
+      "imagen": "/images/productos/galleta-avellana.png",
+      "precio": 59.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "brownie",
+      "name": "Brownie",
+      "imagen": "/images/productos/brownie.png",
+      "precio": 40.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "espiral_canela",
+      "name": "Espiral de Canela",
+      "imagen": "/images/productos/espiral-canela.png",
+      "precio": 45.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "galleta_chocolate_blanco",
+      "name": "Galleta de Chocolate Blanco",
+      "imagen": "/images/productos/galleta-chocolate-blanco.png",
+      "precio": 40.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    },
+    {
+      "id": "galleta_red_velvet",
+      "name": "Galleta Red Velvet",
+      "imagen": "/images/productos/galleta-red-velvet.png",
+      "precio": 59.00,
+      "steps": ["toppings"],
+      "toppings_key": "nieve"
+    }
+  ]
+}

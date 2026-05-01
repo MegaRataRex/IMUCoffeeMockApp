@@ -1,0 +1,65 @@
+{
+  "category": "alimentos",
+  "shared_toppings": {
+    "id": "salsas",
+    "options": [
+      { "id": "chipotle",  "label": "Salsa Chipotle",  "precio_extra": 2.00 },
+      { "id": "guacamole", "label": "Guacamole",       "precio_extra": 18.00 },
+      { "id": "habanera",  "label": "Salsa Habanera",  "precio_extra": 2.00 }
+    ]
+  },
+  "products": [
+    {
+      "id": "sandwich_doble",
+      "name": "Sandwich Doble",
+      "imagen": "/images/productos/sandwich-doble.png",
+      "precio": 79.00,
+      "steps": ["toppings"],
+      "toppings_key": "salsas"
+    },
+    {
+      "id": "chapata",
+      "name": "Chapata",
+      "imagen": "/images/productos/chapata.png",
+      "precio": 98.00,
+      "steps": ["toppings"],
+      "toppings_key": "salsas"
+    },
+    {
+      "id": "bagel",
+      "name": "Bagel",
+      "imagen": "/images/productos/bagel.png",
+      "precio": 85.00,
+      "steps": ["toppings"],
+      "toppings_key": "salsas"
+    },
+    {
+      "id": "baguette",
+      "name": "Baguette de Carnes Frías",
+      "imagen": "/images/productos/baguette.png",
+      "precio": 99.00,
+      "steps": ["toppings"],
+      "toppings_key": "salsas"
+    },
+    {
+      "id": "croissant",
+      "name": "Croissant",
+      "imagen": "/images/productos/croissant.png",
+      "precio": null,
+      "steps": ["flavor", "toppings"],
+      "flavors": [
+        { "id": "jamon_queso_caliente", "label": "Jamón y Queso Caliente", "precio_extra": 0, "precio_base": 78.00 },
+        { "id": "jamon_queso_frio",     "label": "Jamón y Queso Frío",     "precio_extra": 0, "precio_base": 78.00 }
+      ],
+      "toppings_key": "salsas"
+    },
+    {
+      "id": "panini_italiano",
+      "name": "Panini Italiano",
+      "imagen": "/images/productos/panini.png",
+      "precio": 85.00,
+      "steps": ["toppings"],
+      "toppings_key": "salsas"
+    }
+  ]
+}

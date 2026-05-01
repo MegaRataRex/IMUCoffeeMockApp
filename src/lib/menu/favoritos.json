@@ -1,0 +1,50 @@
+{
+  "category": "favoritos",
+  "products": [
+    {
+      "id": "fav_rockaccino",
+      "name": "Rockaccino para despertar",
+      "imagen": "/images/productos/rockaccino.png",
+      "favorito": true,
+      "hardcoded": true,
+      "resumen": ["Grande", "Avellana", "Leche Deslactosada Light", "+1 Splenda"],
+      "precio": 64.00
+    },
+    {
+      "id": "fav_horchata",
+      "name": "Horchata preferida",
+      "imagen": "/images/productos/horchata.png",
+      "favorito": true,
+      "hardcoded": true,
+      "resumen": ["Fría", "Chica", "Leche Entera", "+1 Canela"],
+      "precio": 54.00
+    },
+    {
+      "id": "fav_dirty_chai",
+      "name": "Dirty Chai con canela",
+      "imagen": "/images/productos/te-chai.png",
+      "favorito": true,
+      "hardcoded": true,
+      "resumen": ["Caliente", "Grande", "Dirty Chai", "Leche de Coco", "+1 Canela"],
+      "precio": 74.00
+    },
+    {
+      "id": "fav_vilatto",
+      "name": "Vilatoo",
+      "imagen": "/images/productos/vilatto.png",
+      "favorito": true,
+      "hardcoded": true,
+      "resumen": ["Mini", "Natural", "+1 Miel", "+1 Granola"],
+      "precio": 54.00
+    },
+    {
+      "id": "fav_latte",
+      "name": "Lattesito con extra shot",
+      "imagen": "/images/productos/latte.png",
+      "favorito": true,
+      "hardcoded": true,
+      "resumen": ["Frío", "Grande", "Vainilla", "Leche de Soya", "+1 Shot"],
+      "precio": 76.00
+    }
+  ]
+}

@@ -1,0 +1,569 @@
+{
+	"category": "bebidas-frias",
+	"products": [
+		{
+			"id": "rockaccino",
+			"name": "Rockaccino",
+			"imagen": "/images/productos/rockaccino.png",
+			"promo": true,
+			"steps": ["size", "flavor", "grain_types", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"flavors": [
+				{ "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "crema_irlandesa", "label": "Crema Irlandesa", "precio_extra": 0 },
+				{ "id": "vainilla", "label": "Vainilla", "precio_extra": 0 },
+				{ "id": "caramelo", "label": "Caramelo", "precio_extra": 0 },
+				{ "id": "moka", "label": "Moka", "precio_extra": 0 },
+				{ "id": "avellana", "label": "Avellana", "precio_extra": 0 },
+				{
+					"id": "moka_blanco",
+					"label": "Moka Blanco",
+					"precio_extra": 0,
+					"precio_override": { "small": 62.0, "large": 72.0, "jumbo": 84.0, "refill": 66.0 }
+				},
+				{
+					"id": "caramel_macchiato",
+					"label": "Caramel Macchiato",
+					"precio_extra": 0,
+					"precio_override": { "small": 62.0, "large": 72.0, "jumbo": 84.0, "refill": 66.0 }
+				}
+			],
+            "grain_types": [
+                { "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "descafeinado", "label": "Descafeinado", "precio_extra": 0 }
+            ],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "shot", "label": "Shot", "precio_extra": 10.0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 }
+			]
+		},
+		{
+			"id": "horchata",
+			"name": "Horchata",
+			"imagen": "/images/productos/horchata.png",
+			"promo": false,
+			"steps": ["size", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 },
+				{ "id": "mascabado", "label": "Mascabado", "precio_extra": 0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "stevia", "label": "Stevia", "precio_extra": 0 }
+			]
+		},
+		{
+			"id": "te_chai",
+			"name": "Té Chai",
+			"imagen": "/images/productos/te-chai.png",
+			"promo": false,
+			"steps": ["size", "flavor", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"flavors": [
+				{
+					"id": "chai_latte",
+					"label": "Chai Latte",
+					"precio_extra": 0
+				},
+				{
+					"id": "frappe_chai",
+					"label": "Frappé Chai",
+					"precio_extra": 0,
+					"conditional_steps": {
+						"remove": ["milk_type"]
+					}
+				},
+				{
+					"id": "dirty_chai",
+					"label": "Dirty Chai",
+					"precio_extra": 10.0,
+					"conditional_steps": {
+						"add_after_flavor": ["grain_types"]
+					}
+				}
+			],
+			"grain_types": [
+				{ "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "descafeinado", "label": "Descafeinado", "precio_extra": 0 }
+			],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [{ "id": "canela", "label": "Canela", "precio_extra": 0 }]
+		},
+        {
+			"id": "vilatto",
+			"name": "Vilatto",
+			"imagen": "/images/productos/vilatto.png",
+			"promo": false,
+			"steps": ["size", "flavor", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 60.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 75.0 }
+			],
+			"flavors": [
+				{
+					"id": "fresa",
+					"label": "Fresa",
+					"precio_extra": 0
+				},
+				{
+					"id": "durazno",
+					"label": "Durazno",
+					"precio_extra": 0
+				},
+				{
+					"id": "natural",
+					"label": "Natural",
+					"precio_extra": 0
+				}
+			],
+			"toppings": [
+				{ "id": "nuez", "label": "Nuez", "precio_extra": 11.0 },
+				{ "id": "granola", "label": "Granola", "precio_extra": 8.0 },
+				{ "id": "frutas", "label": "Frutas", "precio_extra": 8.0 },
+				{ "id": "miel", "label": "Miel", "precio_extra": 10.0 }
+			]
+		},
+        {
+			"id": "tisanas",
+			"name": "Tisanas",
+			"imagen": "/images/productos/tisanas.png",
+			"promo": false,
+			"steps": ["size", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 50.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 60.0 },
+                { "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 100.0 }
+			],
+			"toppings": [
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 },
+                { "id": "frutos_rojos", "label": "Frutos Rojos", "precio_extra": 12.0 },
+                { "id": "stevia", "label": "Stevia", "precio_extra": 0 }
+			]
+		},
+        {
+			"id": "latte",
+			"name": "Latte",
+			"imagen": "/images/productos/latte.png",
+			"promo": false,
+			"steps": ["size", "flavor", "grain_types", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"flavors": [
+				{ "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "crema_irlandesa", "label": "Crema Irlandesa", "precio_extra": 0 },
+				{ "id": "vainilla", "label": "Vainilla", "precio_extra": 0 },
+				{ "id": "caramelo", "label": "Caramelo", "precio_extra": 0 },
+				{ "id": "moka", "label": "Moka", "precio_extra": 0 },
+				{ "id": "avellana", "label": "Avellana", "precio_extra": 0 },
+				{
+					"id": "moka_blanco",
+					"label": "Moka Blanco",
+					"precio_extra": 0,
+					"precio_override": { "small": 62.0, "large": 72.0, "jumbo": 84.0, "refill": 66.0 }
+				}
+			],
+            "grain_types": [
+                { "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "descafeinado", "label": "Descafeinado", "precio_extra": 0 }
+            ],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "shot", "label": "Shot", "precio_extra": 10.0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 }
+			]
+		},
+        {
+            "id": "kfreeze",
+            "name": "Kfreeze",
+            "imagen": "/images/productos/kfreeze.png",
+            "promo": false,
+            "steps": ["size", "flavor", "toppings"],
+            "sizes": [
+                { "id": "mini",   "label": "Mini",   "oz": "12 Oz", "precio": 54.00 },
+                { "id": "small",  "label": "Chico",  "oz": "20 Oz", "precio": 61.00 },
+                { "id": "large",  "label": "Grande", "oz": "30 Oz", "precio": 70.00 },
+                { "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 63.00 }
+            ],
+            "flavors": [
+                {
+                "id": "regular",
+                "label": "Regular",
+                "precio_extra": 0
+                },
+                {
+                "id": "oreo",
+                "label": "Oreo",
+                "precio_extra": 0
+                },
+                {
+                "id": "cajeta",
+                "label": "Cajeta",
+                "precio_extra": 0
+                },
+                {
+                "id": "moka",
+                "label": "Moka",
+                "precio_extra": 0
+                },
+                {
+                "id": "brownie",
+                "label": "Brownie",
+                "precio_extra": 0
+                },
+                {
+                "id": "nutella",
+                "label": "Nutella",
+                "precio_extra": 0,
+                "precio_override": {
+                    "mini": 67.00, "small": 74.00, "large": 91.00, "refill": 88.00
+                },
+                "toppings_added": ["nutella"]
+                },
+                {
+                "id": "toffee_caramel",
+                "label": "Caramelo Toffee",
+                "precio_extra": 0,
+                "precio_override": {
+                    "mini": 60.00, "small": 67.00, "large": 76.00, "refill": 73.00
+                }
+                },
+                {
+                "id": "white_mocha",
+                "label": "Moka Blanco",
+                "precio_extra": 0,
+                "precio_override": {
+                    "mini": null, "small": 62.00, "large": 72.00, "refill": 66.00
+                }
+                },
+                {
+                "id": "caramel_macchiato",
+                "label": "Caramel Macchiato",
+                "precio_extra": 0,
+                "precio_override": {
+                    "mini": null, "small": 62.00, "large": 72.00, "refill": 66.00
+                }
+                },
+                {
+                "id": "carajillo",
+                "label": "Carajillo (Sin Alcohol)",
+                "precio_extra": 0,
+                "precio_override": {
+                    "mini": 63.00, "small": 70.00, "large": 87.00, "refill": 84.00
+                }
+                }
+            ],
+            "toppings": [
+                { "id": "canela",    "label": "Canela",    "precio_extra": 0 },
+                { "id": "chocolate", "label": "Chocolate", "precio_extra": 0 },
+                { "id": "shot",      "label": "Shot",      "precio_extra": 10.00 },
+                { "id": "nieve",     "label": "Nieve",     "precio_extra": 0 },
+                { "id": "fresa",     "label": "Fresa",     "precio_extra": 10.00 },
+                { "id": "chispas",   "label": "Chispas",   "precio_extra": 0 },
+                { "id": "durazno",   "label": "Durazno",   "precio_extra": 8.00 },
+                { "id": "brownie",   "label": "Brownie",   "precio_extra": 10.00 }
+            ]
+        },
+        {
+			"id": "mexicano",
+			"name": "Mexicano",
+			"imagen": "/images/productos/mexicano-espresso.png",
+			"promo": false,
+			"steps": ["size", "flavor", "grain_types", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 32.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 38.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 50.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 35.0 }
+			],
+			"flavors": [
+				{ "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "intenso", "label": "Intenso", "precio_extra": 0 },
+				{ "id": "regular_limon", "label": "Regular limón", "precio_extra": 6.0 },
+				{ "id": "intenso_limon", "label": "Intenso limón", "precio_extra": 6.0 },
+				{ "id": "regular_arandano", "label": "Regular arandano", "precio_extra": 6.0 },
+				{ "id": "intenso_arandano", "label": "Intenso arandano", "precio_extra": 6.0 }
+			],
+            "grain_types": [
+                { "id": "regular", "label": "Regular", "precio_extra": 0 },
+				{ "id": "descafeinado", "label": "Descafeinado", "precio_extra": 0 }
+            ],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "shot", "label": "Shot", "precio_extra": 10.0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 }
+			]
+		},
+        {
+			"id": "tonic",
+			"name": "Caffenio Tonic",
+			"imagen": "/images/productos/caffenio-tonic.png",
+			"promo": false,
+			"steps": ["size", "flavor", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 38.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 47.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 68.0 }
+			],
+			"flavors": [
+				{ "id": "limon", "label": "Limón", "precio_extra": 0 },
+				{ "id": "limon_fresa", "label": "Limón-Fresa", "precio_extra": 5.0 },
+				{ "id": "uvola", "label": "Uvola", "precio_extra": 5.0 }
+			],
+			"toppings": [
+				{ "id": "fresa", "label": "Fresa", "precio_extra": 10.0 },
+				{ "id": "uva", "label": "Uva", "precio_extra": 5.0 },
+				{ "id": "limon", "label": "Limón", "precio_extra": 9.0 }
+			]
+		},
+        {
+            "id": "yambe",
+            "name": "Yambé",
+            "imagen": "/images/productos/yambe.png",
+            "promo": false,
+            "steps": ["size", "flavor", "toppings"],
+            "sizes": [
+                { "id": "mini",     "label": "Mini", "oz": "9 Oz",  "precio": 53.00 },
+                { "id": "small",  "label": "Chico",       "oz": "12 Oz", "precio": 56.00 },
+                { "id": "large",  "label": "Grande",      "oz": "20 Oz", "precio": 69.00 },
+                { "id": "jumbo", "label": "Jumbo",      "oz": "32 Oz", "precio": 103.00 }
+            ],
+            "flavors": [
+                {
+                "id": "fresa_limon",
+                "label": "Fresa-Limón",
+                "precio_extra": 0,
+                "toppings_key": "toppings_fresa_limon"
+                },
+                {
+                "id": "pelon",
+                "label": "Pelón",
+                "precio_extra": 0,
+                "toppings_key": "toppings_pelon"
+                },
+                {
+                "id": "matcha",
+                "label": "Matcha",
+                "precio_extra": 0,
+                "toppings_key": "toppings_matcha_taro",
+                "conditional_steps": {
+                    "add_after_flavor": ["milk_type"]
+                }
+                },
+                {
+                "id": "taro",
+                "label": "Taro",
+                "precio_extra": 0,
+                "toppings_key": "toppings_matcha_taro",
+                "conditional_steps": {
+                    "add_after_flavor": ["milk_type"]
+                }
+                }
+            ],
+            "milk_types": [
+                { "id": "whole_milk",        "label": "Leche Entera",             "precio_extra": 0 },
+                { "id": "light_milk",        "label": "Leche Light",              "precio_extra": 0 },
+                { "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+                { "id": "soy_milk",          "label": "Bebida de Soya",           "precio_extra": 12.00 },
+                { "id": "coconut_milk",      "label": "Leche de Coco",            "precio_extra": 12.00 },
+                { "id": "almond_milk",       "label": "Leche de Almendras",       "precio_extra": 12.00 }
+            ],
+            "toppings_fresa_limon": [
+                { "id": "fresa",  "label": "Fresa",  "precio_extra": 10.00 },
+                { "id": "pelon",  "label": "Pelón",  "precio_extra": 10.00 },
+                { "id": "limon",  "label": "Limón",  "precio_extra": 9.00 }
+            ],
+            "toppings_pelon": [
+                { "id": "pelon", "label": "Pelón", "precio_extra": 10.00 }
+            ],
+            "toppings_matcha_taro": [
+                { "id": "shot",  "label": "Shot",  "precio_extra": 10.00 },
+                { "id": "nieve", "label": "Nieve", "precio_extra": 10.00 }
+            ]
+        },
+        {
+			"id": "chocolate",
+			"name": "Chocolate",
+			"imagen": "/images/productos/chocolate.png",
+			"promo": false,
+			"steps": ["size", "flavor", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"flavors": [
+				{ "id": "oaxaqueño", "label": "Oaxaqueño", "precio_extra": 0 },
+				{ "id": "moka_blanco", "label": "Moka Blanco", "precio_extra": 8.0 }
+			],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "shot", "label": "Shot", "precio_extra": 10.0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 }
+			]
+		},
+        {
+			"id": "te_matcha",
+			"name": "Té Matcha",
+			"imagen": "/images/productos/te-matcha.png",
+			"promo": false,
+			"steps": ["size", "milk_type", "toppings"],
+			"sizes": [
+				{ "id": "small", "label": "Chico", "oz": "12 Oz", "precio": 54.0 },
+				{ "id": "large", "label": "Grande", "oz": "20 Oz", "precio": 64.0 },
+				{ "id": "jumbo", "label": "Jumbo", "oz": "30 Oz", "precio": 76.0 },
+				{ "id": "refill", "label": "Refill", "oz": "20 Oz", "precio": 61.0 }
+			],
+			"milk_types": [
+				{ "id": "whole_milk", "label": "Leche Entera", "precio_extra": 0 },
+				{ "id": "light_milk", "label": "Leche Light", "precio_extra": 0 },
+				{ "id": "lactose_free_milk", "label": "Leche Deslactosada Light", "precio_extra": 0 },
+				{ "id": "soy_milk", "label": "Bebida de Soya", "precio_extra": 12.0 },
+				{ "id": "coconut_milk", "label": "Leche de Coco", "precio_extra": 12.0 },
+				{ "id": "almond_milk", "label": "Leche de Almendras", "precio_extra": 12.0 }
+			],
+			"toppings": [
+				{ "id": "canela", "label": "Canela", "precio_extra": 0 },
+				{ "id": "splenda", "label": "Splenda", "precio_extra": 0 },
+				{ "id": "azucar", "label": "Azúcar", "precio_extra": 0 },
+				{ "id": "fruta_monje", "label": "Fruta del Monje", "precio_extra": 1.0 }
+			]
+		},
+        {
+            "id": "lateada",
+            "name": "Lateada",
+            "imagen": "/images/productos/lateada.png",
+            "promo": false,
+            "steps": ["size", "flavor", "toppings"],
+            "sizes": [
+                { "id": "mini",  "label": "Mini",   "oz": "12 Oz", "precio": 55.00 },
+                { "id": "small", "label": "Chico",  "oz": "20 Oz", "precio": 62.00 },
+                { "id": "large", "label": "Grande", "oz": "30 Oz", "precio": 70.00 }
+            ],
+            "flavors": [
+                { "id": "oreo",               "label": "Oreo",              "precio_extra": 0 },
+                { "id": "strawberry",         "label": "Fresa",             "precio_extra": 0 },
+                { "id": "vanilla",            "label": "Vainilla",          "precio_extra": 0 },
+                { "id": "chocolate",          "label": "Chocolate",         "precio_extra": 0 },
+                { "id": "coffee",             "label": "Café",              "precio_extra": 0 },
+                { "id": "coconut_banana",     "label": "Coco-Plátano",      "precio_extra": 0 },
+                { "id": "cherry",             "label": "Cereza",            "precio_extra": 0 },
+                {
+                "id": "matcha",
+                "label": "Matcha",
+                "precio_extra": 0,
+                "precio_override": { "mini": 68.00, "small": 81.00, "large": 109.00 },
+                "toppings_key": "toppings_matcha"
+                },
+                {
+                "id": "taro",
+                "label": "Taro",
+                "precio_extra": 0,
+                "precio_override": { "mini": 68.00, "small": 81.00, "large": 109.00 }
+                }
+            ],
+            "toppings": [
+                { "id": "strawberry", "label": "Fresa",    "precio_extra": 10.00 },
+                { "id": "oreo",       "label": "Oreo",     "precio_extra": 10.00 },
+                { "id": "coconut",    "label": "Coco",     "precio_extra": 6.00 },
+                { "id": "banana",     "label": "Plátano",  "precio_extra": 8.00 },
+                { "id": "walnut",     "label": "Nuez",     "precio_extra": 11.00 },
+                { "id": "mocha",      "label": "Moka",     "precio_extra": 10.00 },
+                { "id": "nutella",    "label": "Nutella",  "precio_extra": 15.00 }
+            ]
+        },
+        {
+            "id": "sundae",
+            "name": "Sundae",
+            "imagen": "/images/productos/sundae.png",
+            "promo": false,
+            "steps": ["size", "flavor", "toppings"],
+            "sizes": [{ "id": "mini",  "label": "Mini",   "oz": "9 Oz", "precio": 45.00 }],
+            "flavors": [
+                { "id": "chocolate",   "label": "Chocolate",   "precio_extra": 0 },
+                { "id": "oreo",        "label": "Oreo",        "precio_extra": 0 },
+                { "id": "strawberry",  "label": "Fresa",       "precio_extra": 0 },
+                { "id": "natural",     "label": "Natural",     "precio_extra": 0 },
+                { "id": "white_mocha", "label": "Moka Blanco", "precio_extra": 8.0 },
+                { "id": "wildberry",   "label": "Wildberry",   "precio_extra": 6.0 }
+            ],
+            "toppings": [
+                { "id": "strawberry", "label": "Fresa",    "precio_extra": 10.00 },
+                { "id": "chispas",       "label": "Chispas",     "precio_extra": 0 },
+                { "id": "walnut",     "label": "Nuez",     "precio_extra": 11.00 },
+                { "id": "wildberry",      "label": "Wild Berry",     "precio_extra": 10.00 },
+                { "id": "brownie",    "label": "Brownie",  "precio_extra": 10.00 }
+            ]
+        }
+	]
+}

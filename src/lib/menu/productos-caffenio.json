@@ -1,0 +1,59 @@
+{
+  "category": "productos-caffenio",
+  "products": [
+    {
+      "id": "caffenio_grano",
+      "name": "Caffenio en Grano",
+      "imagen": "/images/productos/caffenio-grano.png",
+      "precio": null,
+      "steps": ["tipo", "grain_types"],
+      "tipos": [
+        {
+          "id": "entero",
+          "label": "Entero",
+          "precio_extra": 0
+        },
+        {
+          "id": "molido",
+          "label": "Molido",
+          "precio_extra": 0,
+          "conditional_steps": {
+            "add_after_tipo": ["presentacion_molido"]
+          }
+        },
+        {
+          "id": "cafe_regiones",
+          "label": "Café Regiones",
+          "precio_extra": 0,
+          "conditional_steps": {
+            "replace": {
+              "remove": ["grain_type"],
+              "add_after_tipo": ["presentacion_regiones", "flavor_regiones"]
+            }
+          }
+        }
+      ],
+      "presentaciones_molido": [
+        { "id": "grueso", "label": "Grueso", "precio_extra": 0 },
+        { "id": "medio",  "label": "Medio",  "precio_extra": 0 },
+        { "id": "fino",   "label": "Fino",   "precio_extra": 0 }
+      ],
+      "grain_types": [
+        { "id": "regular",      "label": "Regular",      "precio_base": 195.00 },
+        { "id": "descafeinado", "label": "Descafeinado", "precio_base": 200.00 },
+        { "id": "intenso",      "label": "Intenso",      "precio_base": 195.00 }
+      ],
+      "presentaciones_regiones": [
+        { "id": "entero", "label": "Entero", "precio_extra": 0 },
+        { "id": "grueso", "label": "Grueso", "precio_extra": 0 },
+        { "id": "medio",  "label": "Medio",  "precio_extra": 0 },
+        { "id": "fino",   "label": "Fino",   "precio_extra": 0 }
+      ],
+      "flavors_regiones": [
+        { "id": "chiapas",   "label": "Chiapas",   "precio_base": 110.00 },
+        { "id": "puebla",    "label": "Puebla",    "precio_base": 110.00 },
+        { "id": "veracruz",  "label": "Veracruz",  "precio_base": 110.00 }
+      ]
+    }
+  ]
+}
