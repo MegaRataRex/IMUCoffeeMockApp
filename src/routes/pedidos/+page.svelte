@@ -4,6 +4,7 @@
 	import { menuData } from '$lib/menu/index';
 	import { cartItems, cartCount, removeFromCart } from '$lib/stores/cart';
 	import CartBar from '$lib/components/CartBar.svelte';
+	import { goto } from '$app/navigation';
 
 	let selectedProduct: any = null;
 	let selectedCategoryData: any = null;
@@ -310,7 +311,7 @@
 								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
 								Cerrar ×
 								</button>
-								<button class="btn-enviar">
+								<button class="btn-enviar disabled={$cartCount === 0} on:click={() => goto('/pago')}">
 								Enviar pedido →
 								</button>
 							</div>
@@ -541,7 +542,7 @@
 								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
 								Cerrar ×
 								</button>
-								<button class="btn-enviar">
+								<button class="btn-enviar" disabled={$cartCount === 0} on:click={() => goto('/pago')}>
 								Enviar pedido →
 								</button>
 							</div>
@@ -1227,7 +1228,7 @@
 
 	.cart-total {
 		font-size: 0.9rem;
-		font-weight: 400;
+		font-weight: 700;
 		color: #e8194b;
 		margin: 0;
 		font-family: 'Poppins', sans-serif;
@@ -1265,5 +1266,10 @@
 		font-weight: 600;
 		cursor: pointer;
 		color: #ffffff;
+	}
+
+	.btn-enviar:disabled {
+		opacity: 0.4;
+		cursor: default;
 	}
 </style>

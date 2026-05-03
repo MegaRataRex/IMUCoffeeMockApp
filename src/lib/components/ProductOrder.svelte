@@ -5,6 +5,7 @@
     getStepLabel, getOptionsForStep, computeActiveSteps,
     computePrice, buildSummary
   } from '$lib/components/ProductOrderLogic';
+  import { goto } from '$app/navigation';
 
   export let product: any;
   export let categoryData: any = null;
@@ -111,7 +112,7 @@ function goNext() {
                     <img src="/images/icon-add-product.png" alt="Agregar producto" />
                     <span>Agregar producto</span>
                 </button>
-                <button class="final-card" on:click={addToCart}>
+                <button class="final-card" on:click={() => goto('/pago')}>
                     <img src="/images/icon-pay.png" alt="Pagar Pedido" />
                     <span>Pagar Pedido</span>
                 </button>
