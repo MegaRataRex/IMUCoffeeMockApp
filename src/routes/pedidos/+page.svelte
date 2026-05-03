@@ -2,9 +2,17 @@
 	import { onMount, onDestroy } from 'svelte';
 	import ProductOrder from '$lib/components/ProductOrder.svelte';
 	import { menuData } from '$lib/menu/index';
+	import { cartItems, cartCount, removeFromCart } from '$lib/stores/cart';
+	import CartBar from '$lib/components/CartBar.svelte';
 
 	let selectedProduct: any = null;
 	let selectedCategoryData: any = null;
+	let viendoCarrito = false;
+	let hasEverAddedToCart = false;
+
+	$: if ($cartCount > 0) {
+		hasEverAddedToCart = true;
+	}
 
 	function openProduct(prod: any, categoryId: string) {
 		const catData = menuData[categoryId];
@@ -15,12 +23,16 @@
 	}
 
 	function handleAddToCart(e: CustomEvent) {
-		console.log('Agregado al carrito:', e.detail);
 		selectedProduct = null;
-		itemsEnCarrito++;
+		viendoCarrito = false;
+	}
+
+	function toggleCarrito() {
+		viendoCarrito = !viendoCarrito;
 	}
 
 	$: pickupRows = productosMostrados.length <= 8 ? 1 : 2;
+	$: cartRows = $cartItems.length <= 3 ? 1 : 2;
 
 	const usuario = { nombre: 'Emiliano López' };
 
@@ -239,36 +251,93 @@
 
 		<!-- SECCIÓN 4 — Productos (arriba) -->
 		{#if selectedProduct}
-		<div class="order-panel">
-			<ProductOrder
-			product={selectedProduct}
-			categoryData={selectedCategoryData}
-			on:close={() => selectedProduct = null}
-			on:addToCart={handleAddToCart}
-			/>
-		</div>
-		{:else}
-		<div class="products-section-pickup">
-			<h3 class="section-title">
-			{categorias.find(c => c.id === categoriaActiva)?.label ?? ''}
-			</h3>
-			<div class="products-grid-pickup" style="grid-template-rows: repeat({pickupRows}, 1fr);">
-			{#each productosMostrados as prod}
-				<button class="product-card" on:click={() => openProduct(prod, categoriaActiva)}>
-				<div class="product-img-wrap">
-					<img src={prod.imagen} alt={prod.nombre} />
-					{#if prod.promo}
-					<span class="promo-badge">Promoción</span>
-					{/if}
-					{#if prod.favorito}
-					<img class="fav-star" src="/images/icon-star.png" alt="Favorito" />
-					{/if}
-				</div>
-				<span class="prod-nombre">{prod.nombre}</span>
-				</button>
-			{/each}
+			<div class="order-panel">
+				<ProductOrder
+					product={selectedProduct}
+					categoryData={selectedCategoryData}
+					on:close={() => (selectedProduct = null)}
+					on:addToCart={handleAddToCart}
+				/>
 			</div>
-		</div>
+		{:else if viendoCarrito}
+			<div class="products-section-pickup">
+				<h3 class="section-title">Tu pedido</h3>
+				<div class="cart-list">
+					{#each $cartItems as item (item.cartId)}
+						<div class="cart-item">
+							<div class="cart-img-wrap">
+								<img src={item.product.imagen} alt={item.product.name} />
+								<span class="cart-qty-badge">{item.cantidad}</span>
+							</div>
+							<div class="cart-info">
+								<p class="cart-price">${item.totalPrice.toFixed(2)}</p>
+								<p class="cart-name">
+									{item.product.name} <span class="cart-qty-inline">{item.cantidad}x</span>
+								</p>
+								<div class="cart-summary">
+									{#each item.summaryLines as line}<span>{line}</span>{/each}
+								</div>
+								<div class="cart-actions">
+									<button class="cart-action-btn" on:click={() => removeFromCart(item.cartId)}>
+										<img src="/images/icon-trash.png" alt="Eliminar" />
+										<span>Eliminar</span>
+									</button>
+									<button
+										class="cart-action-btn"
+										on:click={() => {
+											openProduct(
+												{
+													id: item.product.id,
+													nombre: item.product.name,
+													imagen: item.product.imagen
+												},
+												item.product.category ?? categoriaActiva
+											);
+											viendoCarrito = false;
+										}}
+									>
+										<img src="/images/icon-edit.png" alt="Editar" />
+										<span>Editar</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					{/each}
+				</div>
+				<div class="cart-footer">
+							<p class="cart-total">Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong></p>
+							<div class="cart-footer-btns">
+								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
+								Cerrar ×
+								</button>
+								<button class="btn-enviar">
+								Enviar pedido →
+								</button>
+							</div>
+					</div>
+			</div>
+		{:else}
+			<div class="products-section-pickup">
+				<h3 class="section-title">
+					{categorias.find((c) => c.id === categoriaActiva)?.label ?? ''}
+				</h3>
+				<div class="products-grid-pickup" style="grid-template-rows: repeat({pickupRows}, 1fr);">
+					{#each productosMostrados as prod}
+						<button class="product-card" on:click={() => openProduct(prod, categoriaActiva)}>
+							<div class="product-img-wrap">
+								<img src={prod.imagen} alt={prod.nombre} />
+								{#if prod.promo}<span class="promo-badge">Promoción</span>{/if}
+								{#if prod.favorito}<img
+										class="fav-star"
+										src="/images/icon-star.png"
+										alt="Favorito"
+									/>{/if}
+							</div>
+							<span class="prod-nombre">{prod.nombre}</span>
+						</button>
+					{/each}
+				</div>
+			</div>
 		{/if}
 
 		<!-- Carrusel ancho + botones verticales -->
@@ -309,9 +378,12 @@
 					</div>
 				</button>
 
-				<button class="action-btn" class:disabled={!carritoActivo} disabled={!carritoActivo}>
-					<div class="action-circle-pickup" class:circle-disabled={!carritoActivo}>
+				<button class="action-btn" on:click={toggleCarrito}>
+					<div class="action-circle-pickup circle-green" style="position:relative">
 						<img src="/images/icon-cart.png" alt="Ver pedido" />
+						{#if $cartCount > 0}
+							<span class="cart-badge" style="color: #7FB103;">{$cartCount}</span>
+						{/if}
 					</div>
 				</button>
 			</div>
@@ -377,9 +449,12 @@
 					<span>Modo PickUp</span>
 				</button>
 
-				<button class="action-btn" class:disabled={!carritoActivo} disabled={!carritoActivo}>
-					<div class="action-circle" class:circle-disabled={!carritoActivo}>
+				<button class="action-btn" on:click={toggleCarrito}>
+					<div class="action-circle circle-green" style="position:relative">
 						<img src="/images/icon-cart.png" alt="Ver pedido" />
+						{#if $cartCount > 0}
+							<span class="cart-badge" style="color: #7FB103;">{$cartCount}</span>
+						{/if}
 					</div>
 					<span>Ver pedido</span>
 				</button>
@@ -404,13 +479,75 @@
 			</div>
 		</div>
 
-		<!-- SECCIÓN 4 — Productos -->
+		<!-- SECCIÓN 4 — Carrito / Wizard / Productos -->
 		<div class="products-section">
 			<h3 class="section-title">
-				{categorias.find((c) => c.id === categoriaActiva)?.label ?? ''}
+				{viendoCarrito
+					? 'Tu pedido'
+					: (categorias.find((c) => c.id === categoriaActiva)?.label ?? '')}
 			</h3>
-			{#if selectedProduct}
-				<!-- Wizard de personalización -->
+
+			{#if viendoCarrito}
+				<!-- ══ VISTA DEL CARRITO ══ -->
+				<div class="cart-list">
+					{#each $cartItems as item (item.cartId)}
+						<div class="cart-item">
+							<!-- Imagen + badge cantidad -->
+							<div class="cart-img-wrap">
+								<img src={item.product.imagen} alt={item.product.name} />
+								<span class="cart-qty-badge">{item.cantidad}</span>
+							</div>
+
+							<!-- Info -->
+							<div class="cart-info">
+								<p class="cart-price">${item.totalPrice.toFixed(2)}</p>
+								<p class="cart-name">{item.product.name}</p>
+								<p class="cart-summary">{item.summaryLines.join(' · ')}</p>
+
+								<!-- Acciones -->
+								<div class="cart-actions">
+									<button class="cart-action-btn" on:click={() => removeFromCart(item.cartId)}>
+										<img src="/images/icon-trash.png" alt="Eliminar" />
+										<span>Eliminar</span>
+									</button>
+									<button
+										class="cart-action-btn"
+										on:click={() => {
+											openProduct(
+												{
+													id: item.product.id,
+													nombre: item.product.name,
+													imagen: item.product.imagen
+												},
+												item.product.category ?? categoriaActiva
+											);
+											viendoCarrito = false;
+										}}
+									>
+										<img src="/images/icon-edit.png" alt="Editar" />
+										<span>Editar</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					{/each}
+					{#if $cartItems.length === 0}
+						<p class="cart-empty">Tu carrito está vacío</p>
+					{/if}
+				</div>
+				<div class="cart-footer">
+							<p class="cart-total">Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong></p>
+							<div class="cart-footer-btns">
+								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
+								Cerrar ×
+								</button>
+								<button class="btn-enviar">
+								Enviar pedido →
+								</button>
+							</div>
+						</div>
+			{:else if selectedProduct}
+				<!-- ══ WIZARD ══ -->
 				<div class="order-panel">
 					<ProductOrder
 						product={selectedProduct}
@@ -420,26 +557,27 @@
 					/>
 				</div>
 			{:else}
-				<!-- Grid normal de productos -->
-        <div class="products-grid">
-          {#each productosMostrados as prod}
-            <button class="product-card" on:click={() => openProduct(prod, categoriaActiva)}>
-              <div class="product-img-wrap">
-                <img src={prod.imagen} alt={prod.nombre} />
-                {#if prod.promo}
-                  <span class="promo-badge">Promoción</span>
-                {/if}
-                {#if prod.favorito}
-                  <img class="fav-star" src="/images/icon-star.png" alt="Favorito" />
-                {/if}
-              </div>
-              <span class="prod-nombre">{prod.nombre}</span>
-            </button>
-          {/each}
-        </div>
+				<!-- ══ GRID DE PRODUCTOS ══ -->
+				<div class="products-grid">
+					{#each productosMostrados as prod}
+						<button class="product-card" on:click={() => openProduct(prod, categoriaActiva)}>
+							<div class="product-img-wrap">
+								<img src={prod.imagen} alt={prod.nombre} />
+								{#if prod.promo}
+									<span class="promo-badge">Promoción</span>
+								{/if}
+								{#if prod.favorito}
+									<img class="fav-star" src="/images/icon-star.png" alt="Favorito" />
+								{/if}
+							</div>
+							<span class="prod-nombre">{prod.nombre}</span>
+						</button>
+					{/each}
+				</div>
 			{/if}
 		</div>
 	{/if}
+	<CartBar visible={!selectedProduct && !viendoCarrito} on:verPedido={toggleCarrito} />
 </div>
 
 <style>
@@ -731,6 +869,15 @@
 		opacity: 0.35;
 	}
 
+	.circle-green {
+		background: #7fb103 !important;
+		border-color: #7fb103 !important;
+	}
+
+	.circle-green img {
+		filter: brightness(0) invert(1); /* Vuelve el ícono blanco para que contraste con el verde */
+	}
+
 	.action-btn span {
 		font-size: 0.56rem;
 		color: #1a1a1a;
@@ -913,5 +1060,210 @@
 		flex-direction: row;
 		width: 100%;
 		min-height: 320px;
+	}
+
+	/* ════ CARRITO ════ */
+	/* .cart-list {
+		display: flex;
+		grid-template-rows: repeat(2, auto);
+		grid-auto-flow: column;
+		grid-auto-columns: 150px;
+		gap: 0.6rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
+		padding-bottom: 80px;
+		padding-top: 4px;
+	} */
+
+	.cart-list {
+		display: grid;
+		/* grid-template-rows: repeat(1, auto); */
+		grid-auto-flow: column;
+		grid-auto-columns: 150px;
+		gap: 0.6rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
+		padding: 4px 0 8px;
+		}
+
+	.cart-list::-webkit-scrollbar {
+		display: none;
+	}
+
+	.cart-item {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: 150px;
+		background: #ffffff;
+		border: 1.5px solid #dedede;
+		border-radius: 16px;
+		overflow: visible;
+		position: relative;
+	}
+
+	.cart-img-wrap {
+		position: relative;
+		width: 100%;
+	}
+
+	.cart-img-wrap img {
+		width: 100%;
+		height: 80px; /* ← altura fija más pequeña */
+		object-fit: contain;
+		border-radius: 14px 14px 0 0;
+		background: #f9f9f9;
+		display: block;
+	}
+
+	.cart-qty-badge {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		background: #7fb103;
+		color: #fff;
+		font-size: 0.6rem;
+		font-weight: 700;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Poppins', sans-serif;
+	}
+
+	.cart-info {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		padding: 0.6rem 0.6rem 0.5rem;
+		box-sizing: border-box;
+	}
+
+	.cart-price {
+		font-size: 0.7rem;
+		font-weight: 700;
+		color: #e8194b;
+		margin: 0;
+	}
+
+	.cart-name {
+		font-size: 0.6rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0;
+	}
+
+	.cart-summary {
+		font-size: 0.58rem;
+		color: #666;
+		margin: 0;
+		line-height: 1.4;
+	}
+
+	.cart-actions {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+		margin-top: 0.4rem;
+	}
+
+	.cart-action-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		background: none;
+		border: 1.5px solid #dedede;
+		border-radius: 999px;
+		cursor: pointer;
+		font-family: 'Poppins', sans-serif;
+		font-size: 0.58rem;
+		color: #555;
+		padding: 0.2rem 0.6rem;
+	}
+
+	.cart-action-btn img {
+		width: 12px;
+		height: 12px;
+		object-fit: contain;
+	}
+
+	.cart-empty {
+		font-size: 0.8rem;
+		color: #aaa;
+		text-align: center;
+		padding: 2rem 0;
+	}
+
+	.cart-badge {
+		position: absolute;
+		top: -4px;
+		right: -4px;
+		background: #fff;
+		border: 1.5px solid #dedede;
+		font-size: 0.5rem;
+		font-weight: 700;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Poppins', sans-serif;
+	}
+
+	.cart-footer {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.75rem 0 0.5rem;
+		gap: 0.5rem;
+	}
+
+	.cart-total {
+		font-size: 0.9rem;
+		font-weight: 400;
+		color: #e8194b;
+		margin: 0;
+		font-family: 'Poppins', sans-serif;
+	}
+
+	.cart-total strong {
+		font-weight: 700;
+	}
+
+	.cart-footer-btns {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+
+	.btn-cerrar {
+		background: #ffffff;
+		border: 1.5px solid #dedede;
+		border-radius: 999px;
+		padding: 0.4rem 1rem;
+		font-family: 'Poppins', sans-serif;
+		font-size: 0.7rem;
+		font-weight: 500;
+		cursor: pointer;
+		color: #1a1a1a;
+	}
+
+	.btn-enviar {
+		background: #e8194b;
+		border: none;
+		border-radius: 999px;
+		padding: 0.4rem 1rem;
+		font-family: 'Poppins', sans-serif;
+		font-size: 0.7rem;
+		font-weight: 600;
+		cursor: pointer;
+		color: #ffffff;
 	}
 </style>

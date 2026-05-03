@@ -1,297 +1,76 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
+  import { addToCart as addToCartStore } from '$lib/stores/cart';
+  import {
+    getStepLabel, getOptionsForStep, computeActiveSteps,
+    computePrice, buildSummary
+  } from '$lib/components/ProductOrderLogic';
 
-	export let product: any;
-	export let categoryData: any = null;
-    let showFinalHardcoded = false;
+  export let product: any;
+  export let categoryData: any = null;
 
-	const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-	// ── Cantidad ──
-	let cantidad = 1;
+  let cantidad = 1;
+  let selections: Record<string, any> = {};
+  let toppingQty: Record<string, number> = {};
+  let currentStepIndex = 0;
 
-	// ── Selecciones por paso ──
-	let selections: Record<string, any> = {};
+  // Wrapper para pasar a las funciones de lógica
+  const getOpts = (step: string) =>
+    getOptionsForStep(step, product, categoryData, selections);
 
-	// ── Cantidades de toppings ──
-	let toppingQty: Record<string, number> = {};
-
-	// ── Pasos activos — recalcula cuando cambian las selecciones ──
-	$: activeSteps = computeActiveSteps(selections);
+  $: activeSteps    = computeActiveSteps(product, selections, getOpts);
+  $: currentStep    = activeSteps[currentStepIndex] ?? '';
+  $: currentOptions = getOpts(currentStep);
+  $: stepLabel      = getStepLabel(currentStep);
+  $: isToppings     = currentStep === 'toppings';
+  $: isHardcoded    = product.hardcoded === true;
+  $: totalPrice     = computePrice(product, selections, toppingQty, cantidad, getOpts);
+  $: summaryLines   = buildSummary(product, selections, toppingQty, isHardcoded, getOpts);
 
 	$: canGoNext = (() => {
-		// En la pestaña final nunca avanza
 		if (currentStepIndex >= activeSteps.length) return false;
-		// En toppings siempre puede avanzar
-		if (isToppings) return true;
-		// En cualquier otro paso, necesita selección
+		if (isToppings) return false;
 		return selections[currentStep] !== undefined && selections[currentStep] !== null;
 	})();
 
-	function computeActiveSteps(sel: Record<string, any>): string[] {
-		let steps = [...(product.steps ?? [])];
+  function selectOption(id: string) {
+    if (currentStep === 'flavor' || currentStep === 'tipo') {
+      const newSel: Record<string, any> = {};
+      for (const [k, v] of Object.entries(selections)) {
+        if (k === currentStep) break;
+        newSel[k] = v;
+      }
+      selections = { ...newSel, [currentStep]: id };
+      toppingQty = {};
+    } else {
+      selections = { ...selections, [currentStep]: id };
+    }
+    setTimeout(() => {
+      if (!isToppings && currentStepIndex < activeSteps.length) currentStepIndex++;
+    }, 180);
+  }
 
-		for (const [stepKey, selectedId] of Object.entries(sel)) {
-			if (!selectedId) continue;
-			const options = getOptionsForStep(stepKey);
-			const opt = options.find((o: any) => o.id === selectedId);
-			if (!opt?.conditional_steps) continue;
+  function setToppingQty(id: string, delta: number) {
+    const cur = toppingQty[id] ?? 0;
+    toppingQty = { ...toppingQty, [id]: Math.max(0, cur + delta) };
+  }
 
-			const cs = opt.conditional_steps;
+  function addToCart() {
+    addToCartStore({ product, selections, toppingQty, cantidad, totalPrice, summaryLines });
+    dispatch('addToCart', { totalPrice, summaryLines });
+  }
 
-			// add_after_X: ["step1", "step2"]
-			for (const [key, toAdd] of Object.entries(cs)) {
-				if (key.startsWith('add_after_')) {
-					const afterStep = key.replace('add_after_', '');
-					const afterIdx = steps.indexOf(afterStep);
-					if (afterIdx !== -1) {
-						const arr = toAdd as string[];
-						arr.forEach((s) => {
-							const ex = steps.indexOf(s);
-							if (ex !== -1) steps.splice(ex, 1);
-						});
-						steps.splice(afterIdx + 1, 0, ...arr);
-					}
-				}
-				if (key === 'remove') {
-					(toAdd as string[]).forEach((s) => {
-						const idx = steps.indexOf(s);
-						if (idx !== -1) steps.splice(idx, 1);
-					});
-				}
-				if (key === 'replace') {
-					const r = toAdd as any;
-					(r.remove ?? []).forEach((s: string) => {
-						const idx = steps.indexOf(s);
-						if (idx !== -1) steps.splice(idx, 1);
-					});
-					for (const [rk, rv] of Object.entries(r)) {
-						if (rk.startsWith('add_after_')) {
-							const after = rk.replace('add_after_', '');
-							const idx = steps.indexOf(after);
-							if (idx !== -1) steps.splice(idx + 1, 0, ...(rv as string[]));
-						}
-					}
-				}
-			}
-		}
-		return steps;
-	}
+  function handleClose() { dispatch('close'); }
 
-	// ── Paso actual ──
-	let currentStepIndex = 0;
+  function goPrev() {
+  if (currentStepIndex > 0) currentStepIndex--;
+}
 
-	$: currentStep = activeSteps[currentStepIndex] ?? '';
-	$: currentOptions = getOptionsForStep(currentStep);
-	$: stepLabel = getStepLabel(currentStep);
-	$: isToppings = currentStep === 'toppings';
-	$: isLastStep = currentStepIndex === activeSteps.length;
-	$: isHardcoded = product.hardcoded === true;
-
-	// Etiquetas de cada tipo de paso
-	const STEP_LABELS: Record<string, string> = {
-		size: 'Tamaños',
-		flavor: 'Sabores',
-		milk_type: 'Tipo de leche o bebida vegetal',
-		toppings: 'Añadir toppings',
-		grain_types: 'Tipo de grano de café',
-		tipo: 'Tipo',
-		presentacion: 'Presentación',
-		milkshake_type: 'Tipo',
-		presentacion_molido: 'Presentación',
-		presentacion_regiones: 'Presentación',
-		flavor_regiones: 'Región'
-	};
-
-	function getStepLabel(step: string): string {
-		return STEP_LABELS[step] ?? step;
-	}
-
-	// Mapa de clave de paso → propiedad en el producto
-	const STEP_KEY_MAP: Record<string, string> = {
-		size: 'sizes',
-		flavor: 'flavors',
-		milk_type: 'milk_types',
-		grain_types: 'grain_types',
-		tipo: 'tipos',
-		presentacion: 'presentaciones',
-		milkshake_type: 'milkshake_types',
-		presentacion_molido: 'presentaciones_molido',
-		presentacion_regiones: 'presentaciones_regiones',
-		flavor_regiones: 'flavors_regiones'
-	};
-
-	function getOptionsForStep(step: string): any[] {
-		if (step === 'toppings') {
-			// shared_toppings del category
-			if (product.toppings_key && categoryData?.shared_toppings) {
-				return categoryData.shared_toppings.options ?? [];
-			}
-			// toppings_key por sabor (Yambé)
-			const selFlavor = selections['flavor'];
-			if (selFlavor) {
-				const flavorObj = (product.flavors ?? []).find((f: any) => f.id === selFlavor);
-				if (flavorObj?.toppings_key) {
-					return product[flavorObj.toppings_key] ?? product.toppings ?? [];
-				}
-			}
-			return product.toppings ?? [];
-		}
-		const key = STEP_KEY_MAP[step];
-		return key ? (product[key] ?? []) : [];
-	}
-
-	// ── Precio total ──
-	$: totalPrice = computePrice(selections, toppingQty, cantidad);
-
-	function computePrice(
-		sel: Record<string, any>,
-		tQty: Record<string, number>,
-		qty: number
-	): number {
-		let base = product.precio ?? 0;
-
-		// Tamaño
-		if (sel.size) {
-			const s = (product.sizes ?? []).find((x: any) => x.id === sel.size);
-			if (s?.precio) base = s.precio;
-			if (s?.precio_base) base = s.precio_base;
-		}
-
-		// Presentación (espressos)
-		if (sel.presentacion) {
-			const p = (product.presentaciones ?? []).find((x: any) => x.id === sel.presentacion);
-			if (p?.precio) base = p.precio;
-		}
-
-		// Tipo de grano base (Caffenio en grano)
-		if (sel.grain_types) {
-			const g = (product.grain_types ?? []).find((x: any) => x.id === sel.grain_types);
-			if (g?.precio_base) base = g.precio_base;
-		}
-
-		// Sabor
-		if (sel.flavor) {
-			const f = (product.flavors ?? []).find((x: any) => x.id === sel.flavor);
-			if (f?.precio_base) base = f.precio_base;
-			if (f?.precio_extra) base += f.precio_extra;
-			if (f?.precio_override && sel.size) {
-				const ov = f.precio_override[sel.size];
-				if (ov !== null && ov !== undefined) base = ov;
-			}
-		}
-
-		// Región (Caffenio en grano)
-		if (sel.flavor_regiones) {
-			const f = (product.flavors_regiones ?? []).find((x: any) => x.id === sel.flavor_regiones);
-			if (f?.precio_base) base = f.precio_base;
-		}
-
-		// Tipo milkshake extra
-		if (sel.milkshake_type) {
-			const m = (product.milkshake_types ?? []).find((x: any) => x.id === sel.milkshake_type);
-			if (m?.precio_extra) base += m.precio_extra;
-		}
-
-		// Leche extra
-		if (sel.milk_type) {
-			const m = (product.milk_types ?? []).find((x: any) => x.id === sel.milk_type);
-			if (m?.precio_extra) base += m.precio_extra;
-		}
-
-		// Toppings
-		const tops = getOptionsForStep('toppings');
-		for (const [id, q] of Object.entries(tQty)) {
-			if (q > 0) {
-				const t = tops.find((x: any) => x.id === id);
-				if (t?.precio_extra) base += t.precio_extra * q;
-			}
-		}
-
-		return base * qty;
-	}
-
-	// ── Resumen de selecciones ──
-	$: summaryLines = buildSummary(selections, toppingQty);
-
-	function buildSummary(sel: Record<string, any>, tQty: Record<string, number>): string[] {
-		if (isHardcoded) return product.resumen ?? [];
-
-		const lines: string[] = [];
-		const add = (arr: any[], key: string) => {
-			const found = arr?.find((x: any) => x.id === key);
-			if (found) lines.push(found.label);
-		};
-
-		if (sel.size) add(product.sizes, sel.size);
-		if (sel.milkshake_type) add(product.milkshake_types, sel.milkshake_type);
-		if (sel.tipo) add(product.tipos, sel.tipo);
-		if (sel.presentacion) add(product.presentaciones, sel.presentacion);
-		if (sel.flavor) add(product.flavors, sel.flavor);
-		if (sel.flavor_regiones) add(product.flavors_regiones, sel.flavor_regiones);
-		if (sel.grain_types) add(product.grain_types, sel.grain_types);
-		if (sel.milk_type) add(product.milk_types, sel.milk_type);
-
-		const tops = getOptionsForStep('toppings');
-		for (const [id, q] of Object.entries(tQty)) {
-			if (q > 0) {
-				const t = tops.find((x: any) => x.id === id);
-				if (t) lines.push(`+${q} ${t.label}`);
-			}
-		}
-
-		return lines;
-	}
-
-	// ── Navegación ──
-	function goNext() {
-		if (currentStepIndex < activeSteps.length - 1) currentStepIndex++;
-	}
-
-	function goPrev() {
-		if (currentStepIndex > 0) currentStepIndex--;
-	}
-
-	function selectOption(id: string) {
-		// Si cambia el sabor, resetear pasos condicionales y toppings
-		if (currentStep === 'flavor' || currentStep === 'tipo') {
-			const newSel: Record<string, any> = {};
-			for (const [k, v] of Object.entries(selections)) {
-				if (k === currentStep) break;
-				newSel[k] = v;
-			}
-			selections = { ...newSel, [currentStep]: id };
-			toppingQty = {};
-		} else {
-			selections = { ...selections, [currentStep]: id };
-		}
-
-		setTimeout(() => {
-			if (!isToppings && currentStepIndex < activeSteps.length - 1) {
-				currentStepIndex++;
-			}
-		}, 180);
-	}
-
-	function setToppingQty(id: string, delta: number) {
-		const cur = toppingQty[id] ?? 0;
-		toppingQty = { ...toppingQty, [id]: Math.max(0, cur + delta) };
-	}
-
-	function addToCart() {
-		dispatch('addToCart', {
-			product,
-			selections,
-			toppingQty,
-			cantidad,
-			totalPrice,
-			summaryLines
-		});
-	}
-
-	function handleClose() {
-		dispatch('close');
-	}
+function goNext() {
+  if (currentStepIndex < activeSteps.length) currentStepIndex++;
+}
 </script>
 
 <div class="wizard-layout">
@@ -328,7 +107,7 @@
 
             <div class="options-wrap">
                 <div class="final-step">
-                <button class="final-card" on:click={handleClose}>
+                <button class="final-card" on:click={addToCart}>
                     <img src="/images/icon-add-product.png" alt="Agregar producto" />
                     <span>Agregar producto</span>
                 </button>
@@ -350,7 +129,7 @@
 				{#if currentStepIndex === activeSteps.length}
 					<!-- Pestaña final -->
 					<div class="final-step">
-						<button class="final-card" on:click={handleClose}>
+						<button class="final-card" on:click={addToCart}>
 							<img src="/images/icon-add-product.png" alt="Agregar producto" />
 							<span>Agregar producto</span>
 						</button>
@@ -377,6 +156,9 @@
 							</div>
 						{/each}
 					</div>
+					<button class="add-toppings-btn" on:click={() => currentStepIndex = activeSteps.length}>
+						añadir toppings
+					</button>
 				{:else}
 					<div class="options-list">
 						{#if currentStep === 'size'}
@@ -865,4 +647,22 @@
 	.final-card:active {
 		background: #f5f5f5;
 	}
+
+	.add-toppings-btn {
+		background: #7FB103;
+		border: none;
+		border-radius: 999px;
+		/* padding: 0.5rem 1.5rem; */
+		width: 100%;
+		height: 1rem;
+		font-family: 'Poppins', sans-serif;
+		font-size: 0.72rem;
+		color: #ffffff;
+		cursor: pointer;
+		align-self: center;
+		margin-top: 0.5rem;
+		transition: opacity 0.15s;
+	}
+
+	.add-toppings-btn:active { opacity: 0.85; }
 </style>
