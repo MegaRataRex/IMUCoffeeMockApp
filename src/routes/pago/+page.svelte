@@ -1,12 +1,17 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { cartItems } from '$lib/stores/cart';
+  import { isGuest } from '$lib/stores/session';
 
-  const metodos = [
+  const metodosTodos = [
     { id: 'ventanilla', label: 'Paga en ventanilla',      icon: '/images/icon-pay-cash.png' },
     { id: 'tarjeta',    label: 'Paga con tarjeta',        icon: '/images/icon-pay-card.png' },
     { id: 'puntos',     label: 'Paga con puntos caffeno', icon: '/images/icon-pay-points.png' }
   ];
+
+  $: metodos = $isGuest
+  ? metodosTodos.filter(m => m.id !== 'puntos')
+  : metodosTodos;
 
   $: total = $cartItems.reduce((s, i) => s + i.totalPrice, 0);
 </script>
@@ -101,7 +106,8 @@
 
   .method-card {
     flex: 1;
-    aspect-ratio: 0.8;
+    /* aspect-ratio: 0.8; */
+    height: 15rem;
     background: #ffffff;
     border: 1.5px solid #dedede;
     border-radius: 18px;

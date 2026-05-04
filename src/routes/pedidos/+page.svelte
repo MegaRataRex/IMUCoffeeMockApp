@@ -5,11 +5,17 @@
 	import { cartItems, cartCount, removeFromCart } from '$lib/stores/cart';
 	import CartBar from '$lib/components/CartBar.svelte';
 	import { goto } from '$app/navigation';
+	import { isGuest } from '$lib/stores/session';
 
 	let selectedProduct: any = null;
 	let selectedCategoryData: any = null;
 	let viendoCarrito = false;
 	let hasEverAddedToCart = false;
+	let modoVoz = false;
+
+	function toggleVoz() {
+	modoVoz = !modoVoz;
+	}
 
 	$: if ($cartCount > 0) {
 		hasEverAddedToCart = true;
@@ -225,12 +231,14 @@
 		<!-- ══════════════════════════════════
          LAYOUT PICKUP
     ══════════════════════════════════ -->
-		<div class="greeting-section">
-			<div class="greeting-text">
+		{#if !$isGuest}
+			<div class="greeting-section">
+				<div class="greeting-text">
 				<h2>Hola, {usuario.nombre}.</h2>
 				<p>¿Qué se te antoja hoy?</p>
+				</div>
 			</div>
-		</div>
+		{/if}
 
 		<!-- SECCIÓN 3 — Categorías (arriba) -->
 		<div class="categories-section">
@@ -306,16 +314,16 @@
 					{/each}
 				</div>
 				<div class="cart-footer">
-							<p class="cart-total">Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong></p>
-							<div class="cart-footer-btns">
-								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
-								Cerrar ×
-								</button>
-								<button class="btn-enviar disabled={$cartCount === 0} on:click={() => goto('/pago')}">
-								Enviar pedido →
-								</button>
-							</div>
+					<p class="cart-total">
+						Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong>
+					</p>
+					<div class="cart-footer-btns">
+						<button class="btn-cerrar" on:click={() => (viendoCarrito = false)}> Cerrar × </button>
+						<button class="btn-enviar" disabled={$cartCount === 0} on:click={() => goto('/pago')}>
+							Enviar pedido →
+						</button>
 					</div>
+				</div>
 			</div>
 		{:else}
 			<div class="products-section-pickup">
@@ -367,8 +375,8 @@
 
 			<!-- Botones de acción verticales -->
 			<div class="pickup-actions">
-				<button class="action-btn">
-					<div class="action-circle-pickup">
+				<button class="action-btn" on:click={toggleVoz}>
+					<div class="action-circle-pickup" class:circle-active={modoVoz}>
 						<img src="/images/icon-voice.png" alt="Pedido con voz" />
 					</div>
 				</button>
@@ -392,8 +400,19 @@
 
 		<!-- Lealtad + Monedero horizontal abajo -->
 		<div class="pickup-cards">
-			<img class="pickup-card-img" src="/images/card-lealtad.png" alt="Nivel de lealtad" />
-			<img class="pickup-card-img" src="/images/card-monedero.png" alt="Prepago y monedero" />
+			{#if $isGuest}
+				<!-- QR en contenedor rojo + greeting a la derecha -->
+				<div class="guest-qr-card pickup-qr">
+					<img src="/images/qr-code-guest.png" alt="QR" />
+				</div>
+				<div class="guest-greeting">
+					<h2>Escanea el QR</h2>
+					<p>para iniciar sesión</p>
+				</div>
+			{:else}
+				<img class="pickup-card-img" src="/images/card-lealtad.png" alt="Nivel de lealtad" />
+				<img class="pickup-card-img" src="/images/card-monedero.png" alt="Prepago y monedero" />
+			{/if}
 		</div>
 	{:else}
 		<!-- ══════════════════════════════════
@@ -402,10 +421,21 @@
 
 		<!-- SECCIÓN 1 — Cards + Carrusel -->
 		<div class="top-section">
-			<div class="left-col">
-				<img class="card-img" src="/images/card-lealtad.png" alt="Nivel de lealtad" />
-				<img class="card-img" src="/images/card-monedero.png" alt="Prepago y monedero" />
-			</div>
+			{#if $isGuest}
+				<!-- ── Invitado: QR en contenedor rojo ── -->
+				<div class="left-col">
+					<div class="guest-qr-card">
+						<img src="/images/qr-code-guest.png" alt="QR de inicio de sesión" />
+					</div>
+				</div>
+			{:else}
+				<!-- ── Usuario loggeado: lealtad + monedero ── -->
+				<div class="left-col">
+					<img class="card-img" src="/images/card-lealtad.png" alt="Nivel de lealtad" />
+					<img class="card-img" src="/images/card-monedero.png" alt="Prepago y monedero" />
+				</div>
+			{/if}
+
 			<div class="right-col">
 				<div class="carousel">
 					{#each promos as promo, i}
@@ -432,15 +462,19 @@
 		<!-- SECCIÓN 2 — Saludo + Botones -->
 		<div class="greeting-section">
 			<div class="greeting-text">
-				<h2>Hola, {usuario.nombre}.</h2>
-				<p>¿Qué se te antoja hoy?</p>
+				{#if $isGuest}
+					<h2>Escanea el QR</h2>
+					<p>para iniciar sesión</p>
+				{:else}
+					<h2>Hola, {usuario.nombre}.</h2>
+					<p>¿Qué se te antoja hoy?</p>
+				{/if}
 			</div>
 			<div class="actions">
-				<button class="action-btn">
-					<div class="action-circle">
+				<button class="action-btn" on:click={toggleVoz}>
+					<div class="action-circle" class:circle-active={modoVoz}>
 						<img src="/images/icon-voice.png" alt="Pedido con voz" />
 					</div>
-					<span>Pedido con voz</span>
 				</button>
 
 				<button class="action-btn" on:click={togglePickup}>
@@ -537,16 +571,16 @@
 					{/if}
 				</div>
 				<div class="cart-footer">
-							<p class="cart-total">Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong></p>
-							<div class="cart-footer-btns">
-								<button class="btn-cerrar" on:click={() => viendoCarrito = false}>
-								Cerrar ×
-								</button>
-								<button class="btn-enviar" disabled={$cartCount === 0} on:click={() => goto('/pago')}>
-								Enviar pedido →
-								</button>
-							</div>
-						</div>
+					<p class="cart-total">
+						Total: <strong>${$cartItems.reduce((s, i) => s + i.totalPrice, 0).toFixed(2)}</strong>
+					</p>
+					<div class="cart-footer-btns">
+						<button class="btn-cerrar" on:click={() => (viendoCarrito = false)}> Cerrar × </button>
+						<button class="btn-enviar" disabled={$cartCount === 0} on:click={() => goto('/pago')}>
+							Enviar pedido →
+						</button>
+					</div>
+				</div>
 			{:else if selectedProduct}
 				<!-- ══ WIZARD ══ -->
 				<div class="order-panel">
@@ -579,6 +613,19 @@
 		</div>
 	{/if}
 	<CartBar visible={!selectedProduct && !viendoCarrito} on:verPedido={toggleCarrito} />
+	{#if modoVoz}
+	<div class="voice-overlay" on:click={toggleVoz} role="button" tabindex="0" on:keydown={(e) => e.key === 'Enter' && toggleVoz()}>
+		<div class="voice-content" on:click|stopPropagation role="presentation">
+		 	<button class="voice-close" on:click={toggleVoz}>×</button>
+			<div class="voice-ring">
+				<div class="voice-circle">
+					<img src="/images/icon-voice.png" alt="Micrófono" />
+				</div>
+			</div>
+			<p class="voice-text">Hola, Bienvenid@ a CAFFENIO</p>
+		</div>
+	</div>
+	{/if}
 </div>
 
 <style>
@@ -1087,7 +1134,7 @@
 		overflow-y: hidden;
 		scrollbar-width: none;
 		padding: 4px 0 8px;
-		}
+	}
 
 	.cart-list::-webkit-scrollbar {
 		display: none;
@@ -1272,4 +1319,146 @@
 		opacity: 0.4;
 		cursor: default;
 	}
+
+	.guest-qr-card {
+		width: 100%;
+		flex: 1;
+		background: #e8194b;
+		border-radius: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		box-sizing: border-box;
+	}
+
+	.guest-qr-card img {
+		width: 100%;
+		max-width: 120px;
+		height: auto;
+		object-fit: contain;
+		/* Invertir colores para que el QR se vea sobre fondo rojo */
+		filter: invert(1);
+	}
+
+	.pickup-qr {
+		width: 90px;
+		height: 90px;
+		flex-shrink: 0;
+		padding: 0.6rem;
+	}
+
+	.pickup-qr img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		filter: invert(1);
+	}
+
+	.guest-greeting {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.1rem;
+	}
+
+	.guest-greeting h2 {
+		font-size: 1rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		margin: 0;
+		line-height: 1.2;
+	}
+
+	.guest-greeting p {
+		font-size: 0.85rem;
+		font-style: italic;
+		color: #1a1a1a;
+		margin: 0;
+	}
+
+	.voice-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  width: 430px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.voice-content {
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: #ffffff;
+  border: 1.5px solid #dedede;
+  border-radius: 28px;
+  padding: 2.5rem 2rem;
+  width: 85%;
+}
+
+/* Anillo rosa exterior */
+.voice-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(232, 25, 75, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+/* Círculo rojo interior */
+.voice-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #e8194b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-circle img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.voice-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.06); opacity: 0.85; }
+}
+
+.voice-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #aaa;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { isGuest } from '$lib/stores/session';
 </script>
 
 <svelte:head>
@@ -22,17 +23,17 @@
 
   <!-- Tarjetas -->
   <div class="cards">
-    <button class="card" on:click={() => goto('/inicio/qr')}>
+    <button class="card" on:click={() => { isGuest.set(false); goto('/inicio/qr'); }}>
       <img src="/images/icon-qr.png" alt="QR" />
       <p>Identifícate escaneando tu QR</p>
     </button>
 
-    <button class="card" on:click={() => goto('/inicio/telefono')}>
+    <button class="card" on:click={() => { isGuest.set(false); goto('/inicio/telefono'); }}>
       <img src="/images/icon-phone.png" alt="Teléfono" />
       <p>Identifícate ingresando tu número</p>
     </button>
 
-    <button class="card" on:click={() => goto('/pedidos')}>
+    <button class="card" on:click={() => { isGuest.set(true); goto('/pedidos'); }}>
       <img src="/images/icon-face.png" alt="Invitado" />
       <p>Realizar pedido sin identificarte</p>
     </button>
@@ -108,7 +109,8 @@
 
   .card {
     flex: 1;
-    aspect-ratio: 0.75;          /* Hace que sean verticales */
+    /* aspect-ratio: 0.75;*/
+    height: 15rem;
     background: #ffffff;
     border: 1.5px solid #dedede;
     border-radius: 18px;
@@ -147,7 +149,7 @@
   .banner {
     margin-top: auto;
     width: 100%;
-    height: 210px;
+    /* height: 210px; */
     flex-shrink: 0;
   }
 
