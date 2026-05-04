@@ -18,7 +18,7 @@
 
   <!-- Saludo -->
   <div class="greeting">
-    <h1><strong>Hola,</strong><br />¿Lista/o para<br />ordenar?</h1>
+    <h1><strong>Hola,</strong><br />¿Lista/o para ordenar?</h1>
   </div>
 
   <!-- Tarjetas -->
@@ -56,11 +56,9 @@
 
   .screen {
     /* Forzar proporción de tablet portrait sin importar el tamaño del browser */
-    width: 430px;
-    height: 100vh;
-    min-height: 700px;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,23 +68,23 @@
 
   /* ── Logo ── */
   .logo-wrap {
-    padding: 2.5rem 1rem 1rem;
+    padding: 6vmin 2vmin 2vmin;
   }
 
   .logo-wrap img {
-    height: 68px;
+    height: 15vmin;
     object-fit: contain;
   }
 
   /* ── Saludo ── */
   .greeting {
     width: 100%;
-    padding: 1rem 1.75rem 0;
+    padding: 2vmin 4vmin 0;
     box-sizing: border-box;
   }
 
   .greeting h1 {
-    font-size: 1.75rem;
+    font-size: 5vmin;
     font-weight: 400;
     color: #1a1a1a;
     line-height: 1.25;
@@ -101,25 +99,25 @@
   .cards {
     display: flex;
     flex-direction: row;
-    gap: 0.75rem;
-    padding: 1.5rem 1.25rem 0;
-    width: 100%;
+    justify-content: center;
+    gap: 2vmin;
+    padding: 4vmin 3vmin 0;
+    width: 90vmin;
     box-sizing: border-box;
   }
 
   .card {
     flex: 1;
-    /* aspect-ratio: 0.75;*/
-    height: 15rem;
+    height: 40vmin;
     background: #ffffff;
-    border: 1.5px solid #dedede;
-    border-radius: 18px;
-    padding: 1.25rem 0.5rem 1rem;
+    border: 0.3vmin solid #dedede;
+    border-radius: 2.5vmin;
+    padding: 3vmin 1vmin 2vmin;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5vmin;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
@@ -130,14 +128,14 @@
   }
 
   .card img {
-    width: 68px;
-    height: 68px;
+    width: 8vmin;
+    height: 8vmin;
     object-fit: contain;
   }
 
   .card p {
     font-family: 'Poppins', sans-serif;
-    font-size: 0.72rem;
+    font-size: 2vmin;
     font-weight: 500;
     color: #1a1a1a;
     text-align: center;
@@ -149,7 +147,7 @@
   .banner {
     margin-top: auto;
     width: 100%;
-    /* height: 210px; */
+    height: 70vmin;
     flex-shrink: 0;
   }
 

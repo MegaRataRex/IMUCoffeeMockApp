@@ -54,7 +54,7 @@
 
 <style>
   .screen {
-    width: 430px;
+    width: 100%;
     min-height: 100vh;
     margin: 0 auto;
     background: #ffffff;
@@ -62,29 +62,30 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Poppins', sans-serif;
-    padding: 0 1.25rem;
+    padding: 0 4%; /* Margen de seguridad táctil */
     box-sizing: border-box;
     overflow: hidden;
   }
 
   /* ── Logo ── */
   .logo-wrap {
-    padding: 2rem 0 1rem;
+    padding: 6vmin 0 3vmin;
   }
 
   .logo-wrap img {
-    height: 68px;
+    height: 8vmin;
     object-fit: contain;
   }
 
   /* ── Título ── */
   .title-wrap {
     width: 100%;
-    margin-bottom: 1.5rem;
+    text-align: center; /* Centramos el texto para la proporción de tablet */
+    margin-bottom: 4vmin;
   }
 
   .title-wrap h1 {
-    font-size: 2rem;
+    font-size: 4.5vmin;
     font-weight: 400;
     color: #1a1a1a;
     line-height: 1.2;
@@ -99,25 +100,26 @@
   .methods {
     display: flex;
     flex-direction: row;
-    gap: 0.75rem;
+    justify-content: center;
+    gap: 2vmin;
     width: 100%;
-    margin-bottom: 1.5rem;
+    max-width: 90vmin; /* Límite para que las tarjetas no se deformen a lo ancho */
+    margin-bottom: 4vmin;
   }
 
   .method-card {
     flex: 1;
-    /* aspect-ratio: 0.8; */
-    height: 15rem;
+    height: 40vmin;
     background: #ffffff;
-    border: 1.5px solid #dedede;
-    border-radius: 18px;
+    border: 0.2vmin solid #dedede;
+    border-radius: 2vmin;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 2vmin;
     cursor: pointer;
-    padding: 1rem 0.5rem;
+    padding: 2vmin 1vmin;
     font-family: 'Poppins', sans-serif;
     transition: border-color 0.15s, background 0.15s;
   }
@@ -128,13 +130,13 @@
   }
 
   .method-card img {
-    width: 64px;
-    height: 64px;
+    width: 8vmin;
+    height: 8vmin;
     object-fit: contain;
   }
 
   .method-card span {
-    font-size: 0.7rem;
+    font-size: 2vmin;
     font-weight: 500;
     color: #1a1a1a;
     text-align: center;
@@ -144,29 +146,29 @@
   /* ── Regresar ── */
   .back-pill {
     align-self: flex-start;
-    width: 52px;
-    height: 52px;
+    width: 8vmin;
+    height: 8vmin;
     background: #ffffff;
-    border: 1.5px solid #dedede;
+    border: 0.2vmin solid #dedede;
     border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     padding: 0;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5vmin;
   }
 
   .back-pill img {
-    width: 20px;
-    height: 20px;
+    width: 3.5vmin;
+    height: 3.5vmin;
     object-fit: contain;
   }
 
   .back-label {
     align-self: flex-start;
-    font-size: 0.72rem;
+    font-size: 1.8vmin;
     color: #1a1a1a;
-    margin-left: 0.25rem;
+    margin-left: 1vmin;
   }
 </style>

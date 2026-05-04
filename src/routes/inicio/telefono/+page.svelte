@@ -71,14 +71,14 @@
 
 <style>
   .screen {
-    width: 430px;
+    width: 100%;
     height: 100vh;
     margin: 0 auto;
     background: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 1.5rem 2rem;
+    padding: 0 4vmin 4vmin;
     box-sizing: border-box;
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
@@ -86,21 +86,22 @@
 
   /* ── Logo ── */
   .logo-wrap {
-    padding: 2.5rem 0 1.25rem;
+    padding: 4vmin 0 2vmin;
   }
 
   .logo-wrap img {
-    height: 68px;
+    height: 8vmin;
     object-fit: contain;
   }
 
   /* ── Instrucción ── */
   .instruction {
-    font-size: 0.88rem;
+    font-size: 2.5vmin;
     color: #1a1a1a;
     text-align: left;
     width: 100%;
-    margin: 0 0 1.25rem;
+    max-width: 70vmin;
+    margin: 0 0 3vmin;
     line-height: 1.45;
   }
 
@@ -108,20 +109,21 @@
   .slots {
     display: flex;
     flex-direction: row;
-    gap: 0.35rem;
-    width: 100%;
-    margin-bottom: 1.5rem;
+    justify-content: center; /*nuevo*/
+    gap: 1vmin;
+    width: 70vmin;
+    margin-bottom: 4vmin;
   }
 
   .slot {
     flex: 1;
-    height: 42px;
+    height: 7vmin;
     border-radius: 999px;
     background: #EDEDED;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 3.5vmin;
     font-weight: 600;
     color: #1a1a1a;
     transition: background 0.15s;
@@ -134,24 +136,24 @@
   /* ── Teclado ── */
   .keypad-wrap {
     background: #D4D4D4BD;
-    border-radius: 20px;
-    padding: 1rem;
+    border-radius: 3vmin;
+    padding: 3vmin;
     width: 100%;
-    max-width: 290px;
+    max-width: 50vmin;
   }
 
   .keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
+    gap: 1.5vmin;
   }
 
   .key {
     background: #ffffff;
     border: none;
-    border-radius: 12px;
-    height: 54px;
-    font-size: 1.2rem;
+    border-radius: 2vmin;
+    height: 9vmin;
+    font-size: 3.5vmin;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
     color: #1a1a1a;
@@ -177,8 +179,8 @@
   }
 
   .key.delete img {
-    width: 22px;
-    height: 22px;
+    width: 3.5vmin;
+    height: 3.5vmin;
     object-fit: contain;
   }
 
@@ -187,16 +189,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 3vmin;
     width: 100%;
     justify-content: center;
   }
 
   .back-pill {
-    width: 52px;
-    height: 120px;
+    width: 8vmin;
+    height: 20vmin;
     background: #ffffff;
-    border: 1.5px solid #dedede;
+    border: 0.3vmin solid #dedede;
     border-radius: 999px;
     display: flex;
     align-items: center;
@@ -211,8 +213,8 @@
   }
 
   .back-pill img {
-    width: 22px;
-    height: 22px;
+    width: 3.5vmin;
+    height: 3.5vmin;
     object-fit: contain;
   }
 </style>

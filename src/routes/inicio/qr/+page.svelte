@@ -30,16 +30,16 @@
 
 <style>
   .screen {
-    width: 430px;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
     background: #ffffff;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 1.25rem;
-    padding: 0 1.25rem;
+    gap: 4vmin;
+    padding: 0 4vmin;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
   }
@@ -47,10 +47,10 @@
   /* ── Píldora tall solo con la flecha ── */
   .back-pill {
     flex-shrink: 0;
-    width: 52px;
-    height: 120px;
+    width: 8vmin;
+    height: 100%;
     background: #ffffff;
-    border: 1.5px solid #dedede;
+    border: 0.3vmin solid #dedede;
     border-radius: 999px;        /* Píldora perfecta */
     display: flex;
     align-items: center;
@@ -65,8 +65,8 @@
   }
 
   .back-pill img {
-    width: 22px;
-    height: 22px;
+    width: 3.5vmin;
+    height: 3.5vmin;
     object-fit: contain;
   }
 
@@ -76,17 +76,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1.75rem;
+    /* justify-content: center; */
+    gap: 4vmin;
+    /* max-width: 60vmin;  */
   }
 
   .logo {
-    height: 72px;
+    height: 10vmin;
     object-fit: contain;
   }
 
   .instruction {
-    font-size: 0.9rem;
+    font-size: 2.5vmin;
     color: #1a1a1a;
     text-align: center;
     line-height: 1.55;
@@ -94,8 +95,8 @@
   }
 
   .qr {
-    width: 190px;
-    height: 190px;
+    width: 35vmin;
+    height: 35vmin;
     object-fit: contain;
   }
 </style>

@@ -58,18 +58,19 @@
 <style>
   .cart-bar {
     position: fixed;
+    zoom: 1.2;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 430px;
+    width: 100%;
     background: #e8194b;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0.6rem 0.75rem;
+    padding: 1.5vmin 2vmin;
     box-sizing: border-box;
-    gap: 0.5rem;
+    gap: 1.5vmin;
     z-index: 100;
     box-shadow: 0 -2px 12px rgba(232, 25, 75, 0.25);
 }
@@ -78,7 +79,7 @@
   .cart-thumbs {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 1.5vmin;
     flex: 1;
     min-width: 0;
     overflow: visible;
@@ -88,24 +89,24 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.35rem;
+    gap: 1vmin;
     flex-shrink: 0;
     position: relative;
     overflow: visible;
-    width: 100px;
+    width: 18vmin;
   }
 
   .thumb-badge {
     position: absolute;
-    top: -6px;
-    left: -6px;
+    top: -1vmin;
+    left: -1vmin;
     background: #ffffff;
     color: #e8194b;
-    border: 1.5px solid #dedede;
-    font-size: 0.5rem;
+    border: 0.2vmin solid #dedede;
+    font-size: 1.2vmin;
     font-weight: 700;
-    width: 14px;
-    height: 14px;
+    width: 2.5vmin;
+    height: 2.5vmin;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -115,10 +116,10 @@
   }
 
   .thumb-wrap img {
-    width: 48px;
-    height: 48px;
+    width: 7vmin;
+    height: 7vmin;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: 1vmin;
     background: #ffffff;
     flex-shrink: 0;
   }
@@ -126,20 +127,20 @@
   .thumb-info {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.3vmin;
     min-width: 0;
     flex: 1;
   }
 
   .thumb-price {
-    font-size: 0.35rem;
+    font-size: 1.2vmin;
     color: #ffffff;
     margin: 0;
     font-family: 'Poppins', sans-serif;
   }
 
   .thumb-name {
-    font-size: 0.35rem;
+    font-size: 1.2vmin;
     color: #ffffff;
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -156,13 +157,13 @@
   }
 
   .thumb-summary-line {
-    font-size: 0.3rem;
+    font-size: 0.9vmin;
     color: rgba(255,255,255,0.8);
     font-family: 'Poppins', sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 96px;
+    max-width: 15vmin;
     line-height: 1.3;
   }
 
@@ -171,7 +172,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.25rem;
+    gap: 0.8vmin;
     flex-shrink: 0;
   }
 
@@ -182,7 +183,7 @@
   }
 
   .total-label {
-    font-size: 0.5rem;
+    font-size: 1.2vmin;
     font-weight: 600;
     color: rgba(255,255,255,0.85);
     font-family: 'Poppins', sans-serif;
@@ -190,7 +191,7 @@
   }
 
   .total-amount {
-    font-size: 1.1rem;
+    font-size: 2vmin;
     font-weight: 700;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
@@ -202,9 +203,9 @@
     color: #e8194b;
     border: none;
     border-radius: 999px;
-    padding: 0.35rem 0.85rem;
+    padding: 1vmin 2vmin;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.50rem;
+    font-size: 1.4vmin;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;

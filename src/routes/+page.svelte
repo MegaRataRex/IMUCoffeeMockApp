@@ -44,7 +44,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 2.5rem 1.5rem 3rem;
+    padding: 6vmin 4vmin 8vmin;
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
@@ -52,13 +52,13 @@
     /* Patrón de cuadros — sin necesidad de imagen */
     background-color: #ffffff;
     background-image: repeating-conic-gradient(#e5e5e5 0% 25%, #ffffff 0% 50%);
-    background-size: 36px 36px;
+    background-size: 15vmin 15vmin;
   }
 
   .hero-text {
     width: 100%;
-    max-width: 300px;
-    margin-top: 0.5rem;
+    max-width: 60vmin;
+    margin-top: 2vmin;
   }
 
   .hero-text img {
@@ -73,12 +73,12 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 1rem 0;
+    padding: 3vmin 0;
   }
 
   .products img {
-    width: 92%;
-    max-width: 360px;
+    width: 85%;
+    max-width: 75vmin;
     height: auto;
     object-fit: contain;
     display: block;
@@ -88,19 +88,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 2vmin;
   }
 
   .touch-icon {
-    width: 60px;
-    height: 60px;
+    width: 12vmin;
+    height: 12vmin;
     object-fit: contain;
     animation: pulse 1.8s ease-in-out infinite;
   }
 
   .cta-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.05rem;
+    font-size: 3.5vmin;
     font-weight: 500;
     color: #222222;
     margin: 0;
@@ -109,6 +109,6 @@
 
   @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50%       { transform: translateY(-4px) scale(1.08); opacity: 0.85; }
+    50%       { transform: translateY(-1.5vmin) scale(1.08); opacity: 0.85; }
   }
 </style>

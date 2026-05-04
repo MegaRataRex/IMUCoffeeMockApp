@@ -763,6 +763,8 @@
 		font-family: 'Poppins', sans-serif;
 		overflow-y: auto;
 		overflow-x: hidden;
+		zoom:1.2;
+		transform-origin: top center;
 	}
 
 	/* ════ SECCIÓN 1 ════ */
